@@ -49,8 +49,13 @@ public class GameEngine {
         }
     }
 
+    public void welcome(){
+        System.out.println("## Welcome to Rock Paper Scissors! ##");
+    }
+
     public void playGame(User user){
         while(running){
+            System.out.println("______________________________________________");
             System.out.print("Please make your choice: ");
             getInputSpel();
             setComputer();
