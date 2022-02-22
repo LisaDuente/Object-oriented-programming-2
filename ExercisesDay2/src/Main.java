@@ -1,21 +1,22 @@
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.TreeSet;
 
 public class Main {
     public static void main(String[] args) {
-        JavaCollection collection = new JavaCollection();
+        /*JavaCollection collection = new JavaCollection();
 
-        /*collection.doTheLinkedList();
+        collection.doTheLinkedList();
         collection.doTheHashSetThing();
         collection.doTheLinkedHashSet();
         collection.doTheTreeSet();
         collection.doTheHashMap();
         collection.doTheHashMapInception();
-         */
+
 
         HashSetExercises ex = new HashSetExercises();
         ex.appendToEnd();
-        /*ex.iterateHashSet();
+        ex.iterateHashSet();
         ex.getSize();
         ex.emptySet();
         System.out.println(ex.checkHashSet());
@@ -23,7 +24,6 @@ public class Main {
         ex.translateToArray();
         ex.convertToTreeSet();
         ex.convertToLists();
-         */
 
         HashSet<String> thisHash = new HashSet<>();
         thisHash.add("Yellow");
@@ -33,7 +33,33 @@ public class Main {
 
         ex.compareSets(thisHash);
         ex.showAllDistinctElements(thisHash);
-        ex.retainElements(thisHash);
+        ex.retainElements(thisHash);*/
 
+        TreeSetExercises exT = new TreeSetExercises();
+
+        exT.addColor("red");
+        exT.addColor("blue");
+        exT.addColor("green");
+
+       exT.print();
+       exT.iterate();
+
+        TreeSet<String> exT2 = new TreeSet<>();
+
+        exT2.add("pink");
+        exT2.add("blue");
+        exT2.add("violet");
+
+        exT.addAllElementsFromSet2(exT2);
+
+        TreeSet<String> exT3 = new TreeSet<>();
+
+        exT3.add("pink");
+        exT3.add("blue");
+        exT3.add("yellow");
+
+        exT.addElementsFromSet(exT3);
+
+        exT.reverse();
     }
 }
