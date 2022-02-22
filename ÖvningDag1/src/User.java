@@ -26,7 +26,7 @@ public class User {
     }
 
     public void showStats(){
-        System.out.println("Wins: " + getWin() + " | Lost: " + getLoose());
+        System.out.println("Wins: " + this.win + " | Lost: " + this.loose);
     }
 
     public void setWin(int win) {

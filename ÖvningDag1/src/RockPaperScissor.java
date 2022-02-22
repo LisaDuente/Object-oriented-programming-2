@@ -9,7 +9,6 @@ public class RockPaperScissor {
     public String randomizeChoice(){
         Random randomizer = new Random();
         int place = randomizer.nextInt(3);
-
         return choices[place];
     }
 }

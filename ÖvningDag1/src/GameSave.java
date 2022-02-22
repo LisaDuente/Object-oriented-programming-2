@@ -8,8 +8,8 @@ public class GameSave {
     private ArrayList<String> userInfo;
 
     public GameSave(String path){
-        save = new File(path);
-        userInfo = new ArrayList<>();
+        this.save = new File(path);
+        this.userInfo = new ArrayList<>();
     }
 
     public void readFromFile(){
@@ -38,8 +38,35 @@ public class GameSave {
     }
 
     public void saveUserInArray(User user){
+
+        //check if a user already exists
+        /*for(int i = 0; i<userInfo.size(); i++){
+            String line = userInfo.get(i);
+            String[] partHolder = line.split(",");
+            if()
+        }*/
+
         String line = user.getName()+","+user.getWin()+","+user.getLoose();
         userInfo.add(line);
+    }
+
+    public void loadUser(User user){
+        System.out.println("Please insert username: ");
+        Scanner scanner = new Scanner (System.in);
+        String userName = scanner.next();
+
+        for(int i = 0; i<userInfo.size(); i++){
+            String line = userInfo.get(i);
+            String[] partHolder = line.split(",");
+            if(userName.equals(partHolder[0])){
+                user.setName(userName);
+                user.setWin(Integer.parseInt(partHolder[1]));
+                user.setLoose(Integer.parseInt(partHolder[2]));
+                break;
+
+            }
+
+        }
     }
 
 }
