@@ -58,6 +58,7 @@ public class GameSave {
         for(int i = 0; i<userInfo.size(); i++){
             String line = userInfo.get(i);
             String[] partHolder = line.split(",");
+            //you can also use .startsWith() and use the name of the user
             if(userName.equals(partHolder[0])){
                 user.setName(userName);
                 user.setWin(Integer.parseInt(partHolder[1]));

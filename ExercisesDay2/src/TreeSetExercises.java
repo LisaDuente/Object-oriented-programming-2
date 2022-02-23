@@ -45,4 +45,29 @@ public class TreeSetExercises {
     public void reverse(){
         System.out.println(tree.descendingSet());
     }
+
+    //5. Write a Java program to get the first and last elements in a tree set.
+    public void firstAndLast(){
+        System.out.println("first: "+tree.first());
+        System.out.println("last: "+tree.last());
+    }
+
+    //6. Write a Java program to clone a tree set list to another tree set.
+    public void cloneTreeSet(){
+        TreeSet<String> clone = new TreeSet<>(tree);
+        System.out.println(clone);
+    }
+
+    //7. Write a Java program to get the number of elements in a tree set.
+    public void getElements(){
+        System.out.println(tree.size());
+    }
+
+    //8. Write a Java program to compare two tree sets.
+    public void compareTreeSets(TreeSet<String> set){
+        System.out.println("Does Tree contains all in set? " + tree.containsAll(set));
+        System.out.println("Does Set contains all in Tree? " + set.containsAll(tree));
+
+    }
+
 }

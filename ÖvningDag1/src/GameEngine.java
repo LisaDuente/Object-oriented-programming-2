@@ -20,7 +20,7 @@ public class GameEngine {
     public void getInputSpel() {
         Scanner scanner = new Scanner(System.in);
         String usersChoice = scanner.next();
-        this.input = usersChoice.toLowerCase();
+        this.input = usersChoice;
     }
 
     public void setComputer() {
@@ -28,17 +28,18 @@ public class GameEngine {
     }
 
     public void compareChoice(){
-        if(this.input.equals("sax") && this.computer.equals("sten")){
+        //equalsIgnoreCase can be used instead of .toLowerCase/UpperCase
+        if(this.input.equalsIgnoreCase("sax") && this.computer.equals("sten")){
             winComputer++;
-        }else if(this.input.equals("sax") && this.computer.equals("påse")){
+        }else if(this.input.equalsIgnoreCase("sax") && this.computer.equals("påse")){
             winUser++;
-        }else if(this.input.equals("sten") && this.computer.equals("påse")){
+        }else if(this.input.equalsIgnoreCase("sten") && this.computer.equals("påse")){
             winComputer++;
-        }else if(this.input.equals("sten") && this.computer.equals("sax")){
+        }else if(this.input.equalsIgnoreCase("sten") && this.computer.equals("sax")){
             winUser++;
-        }else if(this.input.equals("påse") && this.computer.equals("sten")){
+        }else if(this.input.equalsIgnoreCase("påse") && this.computer.equals("sten")){
             winUser++;
-        }else if(this.input.equals("påse") && this.computer.equals("sax")){
+        }else if(this.input.equalsIgnoreCase("påse") && this.computer.equals("sax")){
             winComputer++;
         }
     }
