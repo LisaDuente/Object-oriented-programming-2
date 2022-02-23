@@ -8,7 +8,6 @@ public class GameEngine {
     private boolean menuIsRunning;
     private String input;
     private String computer;
-    private User user;
 
     public GameEngine(){
         currentGame = new RockPaperScissor();
@@ -88,33 +87,11 @@ public class GameEngine {
         return input;
     }
 
-    public void gameLoop(GameSave saver, Menu menu){
+    public boolean getIsMenuRunning() {
+        return menuIsRunning;
+    }
 
-        while(this.menuIsRunning){
-            menu.printMenu();
-            switch(getInput()){
-                case "1":
-                    this.user = saver.loadUser();
-                    break;
-                case "2":
-                    if(user == null){
-                        System.out.println("Please choose a user first!\n");
-                        break;
-                    }
-                    playGame(this.user);
-                    this.user.showStats();
-                    saver.saveUserInHashMap(this.user);
-                    saver.saveFromMapToFile();
-                    resetGame();
-                    break;
-                case "3":
-                    this.menuIsRunning = false;
-                    break;
-                default:
-                    System.out.println("Sorry, wrong input!");
-
-
-            }
-        }
+    public void setMenuIsRunning(boolean menuIsRunning) {
+        this.menuIsRunning = menuIsRunning;
     }
 }

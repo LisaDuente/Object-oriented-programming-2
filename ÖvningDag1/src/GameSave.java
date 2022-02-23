@@ -1,6 +1,5 @@
 import java.io.File;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -20,7 +19,6 @@ public class GameSave {
         }
     }
 
-
     private void readFromFileToHashMap(){
         try {
             Scanner scanner = new Scanner(save);
@@ -36,16 +34,8 @@ public class GameSave {
         }
     }
 
-
     public void saveUserInHashMap(User user){
         users.put(user.getName(),user);
-        /*if(!users.containsKey(user.getName())){
-            users.put(user.getName(),user);
-        }else{
-            System.out.println("Sorry, this user already exists!");
-        }
-
-         */
     }
 
     public void saveFromMapToFile(){
@@ -59,7 +49,6 @@ public class GameSave {
             e.printStackTrace();
         }
     }
-
 
     public User loadUser(){
         User user = new User();
