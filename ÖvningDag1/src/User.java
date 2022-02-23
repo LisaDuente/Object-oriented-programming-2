@@ -6,6 +6,12 @@ public class User {
     private int win;
     private int loose;
 
+    public User(String name, int win, int loose){
+        this.name = name;
+        this.win = win;
+        this.loose = loose;
+    }
+
     public User(){
         this.win = 0;
         this.loose = 0;

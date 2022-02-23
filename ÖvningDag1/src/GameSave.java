@@ -1,23 +1,34 @@
 import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class GameSave {
     private File save;
-    private ArrayList<String> userInfo;
+    private HashMap<String, User> users;
 
     public GameSave(String path){
         this.save = new File(path);
-        this.userInfo = new ArrayList<>();
+        this.users = new HashMap<>();
+        readFromFileToHashMap();
     }
 
-    public void readFromFile(){
+    public void printUsers(){
+        for(User user : this.users.values()){
+            user.showStats();
+        }
+    }
+
+
+    private void readFromFileToHashMap(){
         try {
             Scanner scanner = new Scanner(save);
             while(scanner.hasNextLine()){
                 String line = scanner.nextLine();
-                userInfo.add(line);
+                String[] partHolder = line.split(",");
+                users.put(partHolder[0], new User(partHolder[0],Integer.parseInt(partHolder[1]),
+                        Integer.parseInt(partHolder[2])));
 
             }
         }catch(Exception e){
@@ -25,11 +36,23 @@ public class GameSave {
         }
     }
 
-    public void saveToFile(){
+
+    public void saveUserInHashMap(User user){
+        users.put(user.getName(),user);
+        /*if(!users.containsKey(user.getName())){
+            users.put(user.getName(),user);
+        }else{
+            System.out.println("Sorry, this user already exists!");
+        }
+
+         */
+    }
+
+    public void saveFromMapToFile(){
         try {
             PrintWriter writer = new PrintWriter(save);
-            for(String line : userInfo){
-                writer.println(line);
+            for(User values : users.values()){
+                writer.println(values.getName()+","+values.getWin()+","+values.getLoose());
             }
             writer.close();
         }catch(Exception e){
@@ -37,37 +60,23 @@ public class GameSave {
         }
     }
 
-    public void saveUserInArray(User user){
 
-        //check if a user already exists
-        /*for(int i = 0; i<userInfo.size(); i++){
-            String line = userInfo.get(i);
-            String[] partHolder = line.split(",");
-            if()
-        }*/
-
-        String line = user.getName()+","+user.getWin()+","+user.getLoose();
-        userInfo.add(line);
-    }
-
-    public void loadUser(User user){
+    public User loadUser(){
+        User user = new User();
         System.out.println("Please insert username: ");
         Scanner scanner = new Scanner (System.in);
         String userName = scanner.next();
-
-        for(int i = 0; i<userInfo.size(); i++){
-            String line = userInfo.get(i);
-            String[] partHolder = line.split(",");
-            //you can also use .startsWith() and use the name of the user
-            if(userName.equals(partHolder[0])){
-                user.setName(userName);
-                user.setWin(Integer.parseInt(partHolder[1]));
-                user.setLoose(Integer.parseInt(partHolder[2]));
-                break;
-
-            }
-
+        if(users.containsKey(userName)){
+            user = users.get(userName);
+        }else{
+            System.out.println("This user doesn't exist. Please create a new one: ");
+            user.chooseName();
+            user.setLoose(0);
+            user.setWin(0);
         }
+
+        return user;
     }
+
 
 }
