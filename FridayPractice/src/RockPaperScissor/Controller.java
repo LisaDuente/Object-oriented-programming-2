@@ -5,8 +5,10 @@ public class Controller {
     private Menu menu;
     private GameEngine game;
     private GameSave saver;
+    private View view;
 
     public Controller(){
+        this.view = new View("Rock Paper Scissors");
         this.menu = new Menu();
         this.game = new GameEngine();
         this.saver = new GameSave("src/RockPaperScissor/Save.txt");
@@ -26,7 +28,7 @@ public class Controller {
                         System.out.println("Please choose a user first!\n");
                         break;
                     }
-                    game.playGame(this.user);
+                    game.playGame(this.user, this.view);
                     this.user.showStats();
                     saver.saveUserInHashMap(this.user);
                     saver.saveFromMapToFile();

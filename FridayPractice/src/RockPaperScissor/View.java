@@ -2,6 +2,7 @@ package RockPaperScissor;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
+import java.util.HashMap;
 
 public class View {
 
@@ -29,6 +30,18 @@ public class View {
     JLabel head;
     JLabel score;
 
+    /* TO DO
+        - couple button to input (scissor button = scissor input)
+        - fill player names in List, load should then load the chosen player
+        - look up how the rows in a list are used
+        - swap the button names in gamePanel to pictures
+        - make a cool background
+        - some funny animations for computer's choice and your own choice
+        - change the text file to database just to try it out
+        - look into CSS to see if the frame could look better
+        - save this as an executable
+     */
+
 
     public View(String text){
         try {
@@ -36,7 +49,7 @@ public class View {
         }catch (UnsupportedLookAndFeelException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        control = new Controller();
+        //control = new Controller();
         frame = new JFrame(text);
 
     //initiate panels
@@ -84,7 +97,7 @@ public class View {
 
     //define load panel
         panelLoad.setBounds(0,0,500,400);
-        panelLoad.setBackground(Color.GRAY);
+        panelLoad.setBackground(Color.LIGHT_GRAY);
         panelLoad.setVisible(false);
 
         load.setBounds(100,325,75,25);
@@ -93,7 +106,7 @@ public class View {
 
     //define game panel
         panelGame.setBounds(0,0,500,400);
-        panelGame.setBackground(Color.GRAY);
+        panelGame.setBackground(Color.LIGHT_GRAY);
         panelGame.setVisible(false);
 
         rock.setBounds(50,300, 75,25);
@@ -154,10 +167,14 @@ public class View {
         System.exit(0);
     }
 
-    public void fillList(){
+    public void fillList(/*HashMap map*/){
         //take all information from the save file and load it in here
         for(int i = 0; i<30;i++){
             model.add(i,"test" + i);
         }
+    }
+
+    public void setScore(String s) {
+        this.score.setText(s);
     }
 }

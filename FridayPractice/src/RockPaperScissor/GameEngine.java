@@ -54,9 +54,10 @@ public class GameEngine {
         }
     }
 
-    public void playGame(User user){
+    public void playGame(User user, View view){
         System.out.println("Hey "+ user.getName()+"!");
         while(running){
+            view.setScore("You: " + this.winUser + " | Computer: " + this.winComputer);
             System.out.println("______________________________________________");
             System.out.print("Please make your choice: ");
             getInputSpel();
