@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
+import java.util.function.Supplier;
 
 public class LambdaExercises {
 
@@ -12,6 +14,13 @@ public class LambdaExercises {
         }
         System.out.println();
     }
+
+    /*public static int returnRandom(Supplier<Integer> sup){
+        int j = sup.get() + 1;
+        return j;
+    }
+
+     */
 
     public static void main(String[] args) {
         List<Animal> animals = new ArrayList<>();
@@ -28,6 +37,35 @@ public class LambdaExercises {
        print(animals, a ->  a.isSwimmer());
        print(animals, b -> b.isRunner());
        print(animals, (a) -> {return a.canRun;});
+
+       List<String> test = new ArrayList<>();
+       test.add("Bill");
+       test.add("Marie");
+       test.add("Darth Vader");
+       test.add("Leia Skywalker");
+
+       System.out.println(test);
+
+       //use a comparator to sort the list by your own choice
+        // the compare function of a comparator returns an integer
+        //compareTo() is a function from Comparator Class and takes in two parameters and returns an integer
+        test.sort((p, b) -> p.compareTo(b));
+        System.out.println(test);
+
+        //in collections you can use forEach() to replace a loop
+        // it takes in a Consumer and that one takes in a parameter but returns nothing
+        test.forEach(p -> System.out.println(p));
+
+        //this is going to write out a name and a random number next to it
+        //use a supplier to generate a value
+        Supplier<Integer> random = () -> new Random().nextInt(10);
+        test.forEach(p -> System.out.println(p + " "+random));
+
+
+        //takes in a predicate, the lambda expression should return a boolean
+        test.removeIf(p -> p.charAt(1) == 'a');
+        System.out.println(test);
+
 
     }
 

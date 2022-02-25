@@ -1,3 +1,5 @@
+package RockPaperScissor;
+
 public class Controller {
     private User user;
     private Menu menu;
@@ -7,7 +9,7 @@ public class Controller {
     public Controller(){
         this.menu = new Menu();
         this.game = new GameEngine();
-        this.saver = new GameSave("src/Save");
+        this.saver = new GameSave("src/RockPaperScissor/Save.txt");
 
     }
 
@@ -37,5 +39,17 @@ public class Controller {
                     System.out.println("Sorry, wrong input!");
             }
         }
+    }
+
+    public void doTheLoad(){
+        this.user = saver.loadUser();
+    }
+
+    public GameEngine getGame() {
+        return game;
+    }
+
+    public User getUser() {
+        return user;
     }
 }
