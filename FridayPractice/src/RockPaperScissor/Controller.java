@@ -4,14 +4,15 @@ public class Controller {
     private User user;
     private Menu menu;
     private GameEngine game;
-    private GameSave saver;
+    private GameSaveDB saver;
     private View view;
+    private String currentUserName;
 
     public Controller(){
         this.view = new View("Rock Paper Scissors");
         this.menu = new Menu();
         this.game = new GameEngine();
-        this.saver = new GameSave("src/RockPaperScissor/Save.txt");
+        this.saver = new GameSaveDB();
 
     }
 
@@ -21,7 +22,9 @@ public class Controller {
             menu.printMenu();
             switch(game.getInput()){
                 case "1":
-                    this.user = saver.loadUser();
+                    //we need a method here to give the function a userName from the view
+                    this.currentUserName = "NeonPinky";
+                    this.user = saver.buildAUser(currentUserName);
                     break;
                 case "2":
                     if(user == null){
@@ -30,8 +33,7 @@ public class Controller {
                     }
                     game.playGame(this.user, this.view);
                     this.user.showStats();
-                    saver.saveUserInHashMap(this.user);
-                    saver.saveFromMapToFile();
+                    saver.saveAUser(this.user, this.currentUserName);
                     game.resetGame();
                     break;
                 case "3":
@@ -43,9 +45,9 @@ public class Controller {
         }
     }
 
-    public void doTheLoad(){
+    /*public void doTheLoad(){
         this.user = saver.loadUser();
-    }
+    }*/
 
     public GameEngine getGame() {
         return game;
