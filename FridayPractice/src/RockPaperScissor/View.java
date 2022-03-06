@@ -12,6 +12,7 @@ public class View {
     JPanel panelMenu;
     JPanel panelGame;
     JPanel panelLoad;
+    JPanelBackground test;
     //buttons
     JButton menuLoad;
     JButton menuPlay;
@@ -29,6 +30,9 @@ public class View {
     //labels
     JLabel head;
     JLabel score;
+    //images
+    ImageIcon background;
+    Image bg;
 
     /* TO DO
         - couple button to input (scissor button = scissor input)
@@ -68,6 +72,10 @@ public class View {
         paper = new JButton("Paper");
         scissors = new JButton("Scissors");
 
+    //initiate images
+        this.background = new ImageIcon("src/RockPaperScissor/RPS.bmp");
+        this.bg = background.getImage();
+
     //initiate labels
         head = new JLabel("Welcome to Rock Paper Scissors!");
         score = new JLabel("Here is your game status");
@@ -81,6 +89,7 @@ public class View {
     //define scroll panel
         scroll.createHorizontalScrollBar();
         scroll.setBounds(50,50,375,250);
+
     //define menu panel
         panelMenu.setBounds(0,0,500,400);
         panelMenu.setBackground(Color.LIGHT_GRAY);
@@ -116,6 +125,7 @@ public class View {
         score.setBounds(150,25,200,25);
 
         back.addActionListener(e -> getBack());
+
 
     //add to panels
         panelGame.add(rock);

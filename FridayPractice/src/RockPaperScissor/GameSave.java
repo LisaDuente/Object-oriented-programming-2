@@ -12,7 +12,7 @@ public class GameSave {
     public GameSave(String path){
         this.save = new File(path);
         this.users = new HashMap<>();
-        readFromFileToHashMap();
+
     }
 
     public void printUsers(){
