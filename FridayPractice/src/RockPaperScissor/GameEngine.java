@@ -10,6 +10,8 @@ public class GameEngine {
     private boolean menuIsRunning;
     private String input;
     private String computer;
+    private String message;
+    private String userInput;
 
     public GameEngine(){
         currentGame = new RockPaperScissor();
@@ -53,29 +55,33 @@ public class GameEngine {
             running = false;
         }
     }
+    //work here to change the gameEngine to be compatible with model/ view
+    public void playGame(User user){
+        this.message = "Hey "+ user.getName()+"!";
+        this.message = "You: " + this.winUser + " | Computer: " + this.winComputer;
+        //update userInput here through view
+        setComputer();
+        //show the input of yourself and the computers in view
+        this.message = "You: " + this.input +" | Computer: "+this.computer;
+        compareChoice();
+        showScore();
+        checkWin();
 
-    public void playGame(User user, View view){
-        System.out.println("Hey "+ user.getName()+"!");
-        while(running){
-            view.setScore("You: " + this.winUser + " | Computer: " + this.winComputer);
-            System.out.println("______________________________________________");
-            System.out.print("Please make your choice: ");
-            getInputSpel();
-            setComputer();
-            System.out.println("You: " + this.input +" | Computer: "+this.computer);
-            compareChoice();
-            showScore();
-            checkWin();
-        }
-        if(winUser == 3){
-            user.setWin(user.getWin()+1);
-        }else{
-            user.setLoose(user.getLoose()+1);
+    if(winUser == 3){
+        user.setWin(user.getWin()+1);
+        this.message = "You won!";
+        this.resetGame();
+        //back to menu
+    }else if (winComputer == 3){
+        user.setLoose(user.getLoose()+1);
+        this.message = "You lost!";
+        this.resetGame();
+        //back to menu
         }
     }
 
     public void showScore(){
-        System.out.println("You won: " + this.winUser + " times | Computer won: " + this.winComputer +" times!");
+        this.message = "You won: " + this.winUser + " times | Computer won: " + this.winComputer +" times!";
     }
 
     public void resetGame(){
@@ -104,5 +110,9 @@ public class GameEngine {
 
     public int getWinUser() {
         return winUser;
+    }
+
+    public void setInput(String input) {
+        this.input = input;
     }
 }

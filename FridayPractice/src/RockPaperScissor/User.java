@@ -32,8 +32,8 @@ public class User {
         this.name = name;
     }
 
-    public void showStats(){
-        System.out.println("Wins: " + this.win + " | Lost: " + this.loose);
+    public String showStats(){
+        return "Wins: " + this.win + " | Lost: " + this.loose;
     }
 
     public void setWin(int win) {

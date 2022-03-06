@@ -1,38 +1,35 @@
 package RockPaperScissor;
 
-public class Controller {
+public class Model {
     private User user;
     private Menu menu;
     private GameEngine game;
     private GameSaveDB saver;
-    private View view;
     private String currentUserName;
+    private String error;
+    private String message;
+    private String input;
 
-    public Controller(){
-        this.view = new View("Rock Paper Scissors");
+    public Model(){
         this.menu = new Menu();
         this.game = new GameEngine();
         this.saver = new GameSaveDB();
-
     }
 
     public void gameLoop(){
 
         while(game.getIsMenuRunning()){
-            menu.printMenu();
-            switch(game.getInput()){
+            switch(this.input){
                 case "1":
-                    //we need a method here to give the function a userName from the view
-                    this.currentUserName = "NeonPinky";
                     this.user = saver.buildAUser(currentUserName);
                     break;
                 case "2":
                     if(user == null){
-                        System.out.println("Please choose a user first!\n");
+                        this.error = "Please choose a user first!";
                         break;
                     }
                     game.playGame(this.user);
-                    this.user.showStats();
+                    this.message = this.user.showStats();
                     saver.saveAUser(this.user, this.currentUserName);
                     game.resetGame();
                     break;
@@ -40,20 +37,24 @@ public class Controller {
                     game.setMenuIsRunning(false);
                     break;
                 default:
-                    System.out.println("Sorry, wrong input!");
+                    this.error = "Sorry, wrong input!";
             }
         }
     }
 
-    /*public void doTheLoad(){
-        this.user = saver.loadUser();
-    }*/
-
-    public GameEngine getGame() {
-        return game;
+    public void setCurrentUserName(String currentUserName) {
+        this.currentUserName = currentUserName;
     }
 
-    public User getUser() {
-        return user;
+    public String getCurrentUserName() {
+        return currentUserName;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getMessage() {
+        return message;
     }
 }

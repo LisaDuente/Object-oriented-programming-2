@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public class View {
 
-    Controller control;
+    Model modelClass;
     //frame and panel
     JFrame frame;
     JPanel panelMenu;
@@ -41,7 +41,6 @@ public class View {
         - swap the button names in gamePanel to pictures
         - make a cool background
         - some funny animations for computer's choice and your own choice
-        - change the text file to database just to try it out
         - look into CSS to see if the frame could look better
         - save this as an executable
      */
