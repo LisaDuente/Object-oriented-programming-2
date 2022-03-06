@@ -55,6 +55,11 @@ public class GameEngine {
             running = false;
         }
     }
+
+    public boolean isRunning() {
+        return running;
+    }
+
     //work here to change the gameEngine to be compatible with model/ view
     public void playGame(User user){
         this.message = "Hey "+ user.getName()+"!";
@@ -114,5 +119,9 @@ public class GameEngine {
 
     public void setInput(String input) {
         this.input = input;
+    }
+
+    public String getComputer() {
+        return computer;
     }
 }

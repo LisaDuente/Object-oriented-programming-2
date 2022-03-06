@@ -52,4 +52,8 @@ public class GameSaveDB {
         db.updateUserOnWin(user.getWin(),userName);
         db.updateUserOnLoose(user.getLoose(),userName);
     }
+
+    public HashMap<String, String> getMap() {
+        return map;
+    }
 }

@@ -13,9 +13,11 @@ public class Main {
 
 
         //Playing the game
-        //View view = new View("Rock Paper Scissors");
-        Controller control = new Controller();
-        control.gameLoop();
+        Model model = new Model();
+        Controller control = new Controller(model);
+        View view = new View("Rock Paper Scissors", control);
+        model.addPcl(view);
+        //control.gameLoop();
 
     }
 

@@ -1,12 +1,16 @@
 package RockPaperScissor;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 
-public class View {
+public class View implements PropertyChangeListener {
 
-    Model modelClass;
+    Controller control;
     //frame and panel
     JFrame frame;
     JPanel panelMenu;
@@ -30,29 +34,38 @@ public class View {
     //labels
     JLabel head;
     JLabel score;
+    JLabel loadStatus;
+    JLabel computer = new JLabel("computer");
+    JLabel you;
+    JLabel userInput;
+    JLabel computerInput;
     //images
     ImageIcon background;
     Image bg;
-
+    ImageIcon scr;
+    ImageIcon rck;
+    ImageIcon ppr;
+    ImageIcon nope;
     /* TO DO
-        - couple button to input (scissor button = scissor input)
-        - fill player names in List, load should then load the chosen player
-        - look up how the rows in a list are used
-        - swap the button names in gamePanel to pictures
+
+        - something is wrong with the save and load for the database!!!
+
+        - swap the button names in gamePanel to pictures (scr, ppr, rck)
         - make a cool background
+        - erase all methods and classes that are no longer used
         - some funny animations for computer's choice and your own choice
         - look into CSS to see if the frame could look better
         - save this as an executable
      */
 
 
-    public View(String text){
+    public View(String text, Controller control){
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         }catch (UnsupportedLookAndFeelException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        //control = new Controller();
+        this.control = control;
         frame = new JFrame(text);
 
     //initiate panels
@@ -74,20 +87,21 @@ public class View {
     //initiate images
         this.background = new ImageIcon("src/RockPaperScissor/RPS.bmp");
         this.bg = background.getImage();
+        this.nope = new ImageIcon("src/RockPaperScissor/TryBackgroundItch.png");
 
     //initiate labels
         head = new JLabel("Welcome to Rock Paper Scissors!");
         score = new JLabel("Here is your game status");
+        loadStatus = new JLabel("No Player");
+        you = new JLabel("No Player");
+        computerInput = new JLabel(nope);
+        userInput = new JLabel(nope);
 
     //initiate lists
         model = new DefaultListModel<>();
         fillList();
         list = new JList<>(model);
         scroll = new JScrollPane(list);
-
-    //define scroll panel
-        scroll.createHorizontalScrollBar();
-        scroll.setBounds(50,50,375,250);
 
     //define menu panel
         panelMenu.setBounds(0,0,500,400);
@@ -108,9 +122,23 @@ public class View {
         panelLoad.setBackground(Color.LIGHT_GRAY);
         panelLoad.setVisible(false);
 
+        //define scroll panel
+        scroll.createHorizontalScrollBar();
+        scroll.setBounds(50,50,375,250);
+
         load.setBounds(100,325,75,25);
+        loadStatus.setBounds(50,10,325,25);
         back1.setBounds (300, 325, 75,25);
         back1.addActionListener(e -> getBack());
+
+        load.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                control.loadUser(list.getSelectedValue());
+                loadStatus.setText(list.getSelectedValue());
+                you.setText(list.getSelectedValue());
+            }
+        });
 
     //define game panel
         panelGame.setBounds(0,0,500,400);
@@ -122,8 +150,22 @@ public class View {
         scissors.setBounds(250,300,75,25);
         back.setBounds (350, 300, 75,25);
         score.setBounds(150,25,200,25);
+        you.setBounds(50, 60, 100, 25);
+        computer.setBounds(350, 60, 100, 25);
+        computerInput.setBounds(350, 100, 48,48);
+        userInput.setBounds(50, 100, 48,48);
 
-        back.addActionListener(e -> getBack());
+
+        back.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getBack();
+                control.resetGame();
+            }
+        });
+        rock.addActionListener(e -> control.playGame("rock"));
+        scissors.addActionListener(e -> control.playGame("scissors"));
+        paper.addActionListener(e -> control.playGame("paper"));
 
 
     //add to panels
@@ -132,10 +174,15 @@ public class View {
         panelGame.add(scissors);
         panelGame.add(back);
         panelGame.add(score);
+        panelGame.add(you);
+        panelGame.add(computer);
+        panelGame.add(computerInput);
+        panelGame.add(userInput);
 
         panelLoad.add(load);
         panelLoad.add(back1);
         panelLoad.add(scroll);
+        panelLoad.add(loadStatus);
 
         panelMenu.add(menuLoad);
         panelMenu.add(menuPlay);
@@ -176,14 +223,48 @@ public class View {
         System.exit(0);
     }
 
-    public void fillList(/*HashMap map*/){
-        //take all information from the save file and load it in here
-        for(int i = 0; i<30;i++){
-            model.add(i,"test" + i);
+    public void fillList(){
+        int i = 0;
+        HashMap<String,String> map = control.getSaver().getMap();
+        for(String key : map.keySet()){
+            model.add(i,key);
+            i++;
         }
     }
 
     public void setScore(String s) {
         this.score.setText(s);
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        switch(evt.getPropertyName()){
+            case "input":
+                //set a text for a label or a picture in playPanel
+                if(evt.getNewValue().equals("scissors")){
+
+                }else if(evt.getNewValue().equals("rock")){
+
+                }else if(evt.getNewValue().equals("paper")){
+
+                }else{
+
+                }
+                break;
+            case "message":
+                score.setText(evt.getNewValue().toString());
+                break;
+            case "inputComputer":
+                //set a text to know what the computer did or a picture in playPanel
+                break;
+            case "user":
+                //update statistics from user to display in playPanel?
+                break;
+            //here needs to be everything that could change in the model, like computer output, ect
+        }
+    }
+
+    public DefaultListModel<String> getModel() {
+        return model;
     }
 }
