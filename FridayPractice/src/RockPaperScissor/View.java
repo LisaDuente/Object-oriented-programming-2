@@ -39,6 +39,8 @@ public class View implements PropertyChangeListener {
     JLabel you;
     JLabel userInput;
     JLabel computerInput;
+    JLabel computerWin;
+    JLabel userWin;
     //images
     ImageIcon background;
     Image bg;
@@ -47,10 +49,6 @@ public class View implements PropertyChangeListener {
     ImageIcon ppr;
     ImageIcon nope;
     /* TO DO
-
-        - something is wrong with the save and load for the database!!!
-
-        - swap the button names in gamePanel to pictures (scr, ppr, rck)
         - make a cool background
         - erase all methods and classes that are no longer used
         - some funny animations for computer's choice and your own choice
@@ -88,6 +86,9 @@ public class View implements PropertyChangeListener {
         this.background = new ImageIcon("src/RockPaperScissor/RPS.bmp");
         this.bg = background.getImage();
         this.nope = new ImageIcon("src/RockPaperScissor/TryBackgroundItch.png");
+        this.ppr = new ImageIcon("src/RockPaperScissor/paper.png");
+        this.scr = new ImageIcon("src/RockPaperScissor/Scissor.png");
+        this.rck = new ImageIcon("src/RockPaperScissor/Rock.png");
 
     //initiate labels
         head = new JLabel("Welcome to Rock Paper Scissors!");
@@ -96,6 +97,8 @@ public class View implements PropertyChangeListener {
         you = new JLabel("No Player");
         computerInput = new JLabel(nope);
         userInput = new JLabel(nope);
+        computerWin = new JLabel("Computer wins: " + 0);
+        userWin = new JLabel(("Your wins:" + 0));
 
     //initiate lists
         model = new DefaultListModel<>();
@@ -154,6 +157,8 @@ public class View implements PropertyChangeListener {
         computer.setBounds(350, 60, 100, 25);
         computerInput.setBounds(350, 100, 48,48);
         userInput.setBounds(50, 100, 48,48);
+        userWin.setBounds(50,200,200,25);
+        computerWin.setBounds(350,200,200,25);
 
 
         back.addActionListener(new ActionListener() {
@@ -178,6 +183,8 @@ public class View implements PropertyChangeListener {
         panelGame.add(computer);
         panelGame.add(computerInput);
         panelGame.add(userInput);
+        panelGame.add(userWin);
+        panelGame.add(computerWin);
 
         panelLoad.add(load);
         panelLoad.add(back1);
@@ -242,13 +249,13 @@ public class View implements PropertyChangeListener {
             case "input":
                 //set a text for a label or a picture in playPanel
                 if(evt.getNewValue().equals("scissors")){
-
+                    userInput.setIcon(scr);
                 }else if(evt.getNewValue().equals("rock")){
-
+                    userInput.setIcon(rck);
                 }else if(evt.getNewValue().equals("paper")){
-
+                    userInput.setIcon(ppr);
                 }else{
-
+                    userInput.setIcon(nope);
                 }
                 break;
             case "message":
@@ -256,9 +263,19 @@ public class View implements PropertyChangeListener {
                 break;
             case "inputComputer":
                 //set a text to know what the computer did or a picture in playPanel
+                if(evt.getNewValue().equals("scissors")){
+                    computerInput.setIcon(scr);
+                }else if(evt.getNewValue().equals("rock")){
+                    computerInput.setIcon(rck);
+                }else if(evt.getNewValue().equals("paper")){
+                    computerInput.setIcon(ppr);
+                }else{
+                    computerInput.setIcon(nope);
+                }
                 break;
             case "user":
-                //update statistics from user to display in playPanel?
+                //get the win count from the user object through propertySupport fireing?
+                userWin.setText("Your win: " + evt.getNewValue().toString());
                 break;
             case "currentUserName":
                 //update the label with the username in playPanel and LoadPanel
