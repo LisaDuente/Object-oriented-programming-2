@@ -20,12 +20,17 @@ public class UI {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                long l = Long.parseLong(text.getText());
-                long sum = 0L;
-                for(int i = 0; i<=l; i++){
-                    sum += i;
-                }
-                JOptionPane.showMessageDialog(text, "Result is: " + sum);
+                //start a new thread with a lambda, each button press generates a new thread with the calculation
+                new Thread(() -> {
+                    long l = Long.parseLong(text.getText());
+                    long sum = 0L;
+                    for (int i = 0; i <= l; i++) {
+                        sum += i;
+                    }
+                    JOptionPane.showMessageDialog(text, "Result is: " + sum +
+                            "\nYour Thread: "+Thread.currentThread().getName());
+                }).start(); //here is where the thread starts
+                //the gui can now respond to other inputs while the cpu computes on a different thread
             }
         });
 

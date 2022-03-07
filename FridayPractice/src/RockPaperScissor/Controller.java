@@ -66,4 +66,8 @@ public class Controller {
     public void resetGame(){
         this.model.getGame().resetGame();
     }
+
+    public HashMap<String, String> getMap(){
+        return this.model.getSaver().getMap();
+    }
 }

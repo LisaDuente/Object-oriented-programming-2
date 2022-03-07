@@ -10,8 +10,6 @@ public class GameEngine {
     private boolean menuIsRunning;
     private String input;
     private String computer;
-    private String message;
-    private String userInput;
 
     public GameEngine(){
         currentGame = new RockPaperScissor();
@@ -60,35 +58,6 @@ public class GameEngine {
         return running;
     }
 
-    //work here to change the gameEngine to be compatible with model/ view
-    public void playGame(User user){
-        this.message = "Hey "+ user.getName()+"!";
-        this.message = "You: " + this.winUser + " | Computer: " + this.winComputer;
-        //update userInput here through view
-        setComputer();
-        //show the input of yourself and the computers in view
-        this.message = "You: " + this.input +" | Computer: "+this.computer;
-        compareChoice();
-        showScore();
-        checkWin();
-
-    if(winUser == 3){
-        user.setWin(user.getWin()+1);
-        this.message = "You won!";
-        this.resetGame();
-        //back to menu
-    }else if (winComputer == 3){
-        user.setLoose(user.getLoose()+1);
-        this.message = "You lost!";
-        this.resetGame();
-        //back to menu
-        }
-    }
-
-    public void showScore(){
-        this.message = "You won: " + this.winUser + " times | Computer won: " + this.winComputer +" times!";
-    }
-
     public void resetGame(){
         this.winComputer = 0;
         this.winUser = 0;
@@ -123,5 +92,13 @@ public class GameEngine {
 
     public String getComputer() {
         return computer;
+    }
+
+    public void setWinUser(int winUser) {
+        this.winUser = winUser;
+    }
+
+    public void setWinComputer(int winComputer) {
+        this.winComputer = winComputer;
     }
 }

@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.HashMap;
 
 public class View implements PropertyChangeListener {
 
@@ -16,6 +15,7 @@ public class View implements PropertyChangeListener {
     JPanel panelMenu;
     JPanel panelGame;
     JPanel panelLoad;
+    JPanel panelSave;
     JPanelBackground test;
     //buttons
     JButton menuLoad;
@@ -27,6 +27,7 @@ public class View implements PropertyChangeListener {
     JButton load;
     JButton back;
     JButton back1;
+    JButton newPlayer;
     //lists
     JList<String> list;
     DefaultListModel<String> model;
@@ -48,7 +49,10 @@ public class View implements PropertyChangeListener {
     ImageIcon rck;
     ImageIcon ppr;
     ImageIcon nope;
+    //text
+    TextField newUserInput;
     /* TO DO
+        - add a way to insert a new user
         - make a cool background
         - erase all methods and classes that are no longer used
         - some funny animations for computer's choice and your own choice
@@ -70,6 +74,7 @@ public class View implements PropertyChangeListener {
         panelMenu = new JPanel(null);
         panelLoad = new JPanel(null);
         panelGame = new JPanel(null);
+        panelSave = new JPanelBackground(null);
 
     //initiate buttons
         menuClose = new JButton("Close");
@@ -81,6 +86,7 @@ public class View implements PropertyChangeListener {
         rock = new JButton("Rock");
         paper = new JButton("Paper");
         scissors = new JButton("Scissors");
+        newPlayer = new JButton("New Player");
 
     //initiate images
         this.background = new ImageIcon("src/RockPaperScissor/RPS.bmp");
@@ -106,18 +112,22 @@ public class View implements PropertyChangeListener {
         list = new JList<>(model);
         scroll = new JScrollPane(list);
 
+    //initiate text fields
+        newUserInput = new TextField();
+
     //define menu panel
         panelMenu.setBounds(0,0,500,400);
         panelMenu.setBackground(Color.LIGHT_GRAY);
 
-    //define menu panel
         head.setBounds(150,25,200,25);
-        menuLoad.setBounds(100,300, 75,25);
-        menuPlay.setBounds(200,300,75,25);
-        menuClose.setBounds(300,300,75,25);
+        menuLoad.setBounds(25,300, 75,25);
+        menuPlay.setBounds(125,300,75,25);
+        newPlayer.setBounds(225,300,100,25);
+        menuClose.setBounds(350, 300, 75, 25);
 
         menuLoad.addActionListener(e -> changeToLoad());
         menuPlay.addActionListener(e -> changeToGame());
+        newPlayer.addActionListener(e -> changeToSave());
         menuClose.addActionListener(e -> endGame() );
 
     //define load panel
@@ -134,14 +144,7 @@ public class View implements PropertyChangeListener {
         back1.setBounds (300, 325, 75,25);
         back1.addActionListener(e -> getBack());
 
-        load.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                control.loadUser(list.getSelectedValue());
-                loadStatus.setText(list.getSelectedValue());
-                you.setText(list.getSelectedValue());
-            }
-        });
+        load.addActionListener( e -> control.loadUser(list.getSelectedValue()));
 
     //define game panel
         panelGame.setBounds(0,0,500,400);
@@ -166,11 +169,21 @@ public class View implements PropertyChangeListener {
             public void actionPerformed(ActionEvent e) {
                 getBack();
                 control.resetGame();
+                userInput.setIcon(nope);
+                computerInput.setIcon(nope);
+                score.setText("Let's begin!");
             }
         });
         rock.addActionListener(e -> control.playGame("rock"));
         scissors.addActionListener(e -> control.playGame("scissors"));
         paper.addActionListener(e -> control.playGame("paper"));
+
+    //define panelSave
+        panelSave.setBounds(0,0,500,400);
+        panelSave.setBackground(Color.LIGHT_GRAY);
+        panelSave.setVisible(false);
+
+        newUserInput.setBounds(50, 200, 200, 25);
 
 
     //add to panels
@@ -194,7 +207,11 @@ public class View implements PropertyChangeListener {
         panelMenu.add(menuLoad);
         panelMenu.add(menuPlay);
         panelMenu.add(menuClose);
+        panelMenu.add(newPlayer);
         panelMenu.add(head);
+
+        panelSave.add(newUserInput);
+
 
     //add to frame
         frame.add(panelMenu);
@@ -225,29 +242,32 @@ public class View implements PropertyChangeListener {
         panelGame.setVisible(false);
     }
 
+    public void changeToSave(){
+        panelSave.setVisible(true);
+        panelMenu.setVisible(false);
+        panelLoad.setVisible(false);
+        panelGame.setVisible(false);
+    }
+
     public void endGame(){
         frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
         System.exit(0);
     }
 
+    //make this in control?
     public void fillList(){
         int i = 0;
-        HashMap<String,String> map = control.getModel().getSaver().getMap();
-        for(String key : map.keySet()){
+        for(String key : control.getMap().keySet()){
             model.add(i,key);
             i++;
         }
-    }
-
-    public void setScore(String s) {
-        this.score.setText(s);
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         switch(evt.getPropertyName()){
             case "input":
-                //set a text for a label or a picture in playPanel
+                //set right picture in playPanel
                 if(evt.getNewValue().equals("scissors")){
                     userInput.setIcon(scr);
                 }else if(evt.getNewValue().equals("rock")){
@@ -262,7 +282,7 @@ public class View implements PropertyChangeListener {
                 score.setText(evt.getNewValue().toString());
                 break;
             case "inputComputer":
-                //set a text to know what the computer did or a picture in playPanel
+                //set right picture in playPanel
                 if(evt.getNewValue().equals("scissors")){
                     computerInput.setIcon(scr);
                 }else if(evt.getNewValue().equals("rock")){
@@ -274,17 +294,14 @@ public class View implements PropertyChangeListener {
                 }
                 break;
             case "user":
-                //get the win count from the user object through propertySupport fireing?
-                userWin.setText("Your win: " + evt.getNewValue().toString());
+                //get the win count from the user object through propertySupport firing?
                 break;
             case "currentUserName":
-                //update the label with the username in playPanel and LoadPanel
+                //set the current userName in loadPanel and gamePanel
+                loadStatus.setText(evt.getNewValue().toString());
+                you.setText(evt.getNewValue().toString());
                 break;
             //here needs to be everything that could change in the model, like computer output, ect
         }
-    }
-
-    public DefaultListModel<String> getModel() {
-        return model;
     }
 }
