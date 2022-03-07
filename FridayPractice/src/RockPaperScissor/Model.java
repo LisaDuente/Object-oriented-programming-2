@@ -6,7 +6,6 @@ import java.beans.PropertyChangeSupport;
 public class Model {
     PropertyChangeSupport support;
     private User user;
-    private Menu menu;
     private GameEngine game;
     private GameSaveDB saver;
     private String currentUserName;
@@ -16,7 +15,6 @@ public class Model {
     private String inputComputer;
 
     public Model(){
-        this.menu = new Menu();
         this.game = new GameEngine();
         this.saver = new GameSaveDB();
         this.support = new PropertyChangeSupport(this);
@@ -39,35 +37,6 @@ public class Model {
         support.firePropertyChange("error", this.error, error);
         this.error = error;
     }
-
-    /*
-    public void gameLoop(){
-
-        while(game.getIsMenuRunning()){
-            switch(this.input){
-                case "1":
-                    this.user = saver.buildAUser(currentUserName);
-                    break;
-                case "2":
-                    if(user == null){
-                        this.error = "Please choose a user first!";
-                        break;
-                    }
-                    game.playGame(this.user);
-                    this.message = this.user.showStats();
-                    saver.saveAUser(this.user, this.currentUserName);
-                    game.resetGame();
-                    break;
-                case "3":
-                    game.setMenuIsRunning(false);
-                    break;
-                default:
-                    this.error = "Sorry, wrong input!";
-            }
-        }
-
-
- */
 
     public void setCurrentUserName(String currentUserName) {
         support.firePropertyChange("currentUserName", this.currentUserName, currentUserName);
@@ -92,8 +61,20 @@ public class Model {
         this.user = user;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     public void setInputComputer(String inputComputer) {
         support.firePropertyChange("inputComputer", this.inputComputer,inputComputer);
         this.inputComputer = inputComputer;
+    }
+
+    public GameEngine getGame() {
+        return game;
+    }
+
+    public GameSaveDB getSaver() {
+        return saver;
     }
 }

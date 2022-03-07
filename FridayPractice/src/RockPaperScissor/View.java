@@ -91,7 +91,7 @@ public class View implements PropertyChangeListener {
 
     //initiate labels
         head = new JLabel("Welcome to Rock Paper Scissors!");
-        score = new JLabel("Here is your game status");
+        score = new JLabel("Let's begin!");
         loadStatus = new JLabel("No Player");
         you = new JLabel("No Player");
         computerInput = new JLabel(nope);
@@ -225,7 +225,7 @@ public class View implements PropertyChangeListener {
 
     public void fillList(){
         int i = 0;
-        HashMap<String,String> map = control.getSaver().getMap();
+        HashMap<String,String> map = control.getModel().getSaver().getMap();
         for(String key : map.keySet()){
             model.add(i,key);
             i++;
@@ -259,6 +259,9 @@ public class View implements PropertyChangeListener {
                 break;
             case "user":
                 //update statistics from user to display in playPanel?
+                break;
+            case "currentUserName":
+                //update the label with the username in playPanel and LoadPanel
                 break;
             //here needs to be everything that could change in the model, like computer output, ect
         }
