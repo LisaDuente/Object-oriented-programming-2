@@ -5,6 +5,7 @@ public class Model {
     private int number;
     private String message;
     private int timer;
+    Thread th;
     PropertyChangeSupport support;
 
     public Model(){
@@ -41,5 +42,9 @@ public class Model {
 
     public int getNumber() {
         return number;
+    }
+
+    public String getMessage() {
+        return message;
     }
 }

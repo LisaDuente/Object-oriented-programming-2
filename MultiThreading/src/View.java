@@ -38,7 +38,8 @@ public class View implements PropertyChangeListener {
         //start the timer and randomize a number
         this.enterNumber.addActionListener((e) -> {this.control.setInput(inputField.getText());
             this.inputField.setText("");
-            this.control.compareInput();});
+            this.control.compareInput();
+            this.control.check();});
         this.randomNumber.addActionListener((e) -> {this.control.ramdomize(); this.control.play(); this.control.updateNumber();});
         this.reset.addActionListener(e -> control.resetModel());
 
