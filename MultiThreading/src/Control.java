@@ -14,47 +14,23 @@ public class Control {
         this.model.setNumber(random.nextInt(1, 21));
     }
     public void play(){
-        new Thread(() -> {
-            try{
-                Thread.sleep(21000);
-            }catch(InterruptedException e){
-                e.printStackTrace();
-            }
-
-            if(this.input == this.model.getNumber()){
-                this.model.setMessage("You won!");
-            }else{
-                this.model.setMessage("You lost!");
-            }
-
-        }).start();
+        this.model.startThreads();
     }
 
-    public void updateNumber(){
-        new Thread(() -> {
-            while(model.getTimer()>0){
-                try{
-                    Thread.sleep(1000);
-                }catch(InterruptedException e){
-                    e.printStackTrace();
-                }
-                this.model.setTimer(model.getTimer()-1);
-            }
-        }).start();
-    }
+
 
     public void compareInput(){
-        if(this.input == this.model.getNumber()){
+        if(this.model.getInput() == this.model.getNumber()){
             this.model.setMessage("Right!");
-        } else if(this.input > this.model.getNumber()){
+        } else if(this.model.getInput() > this.model.getNumber()){
             this.model.setMessage("Too high!");
-        }else if(this.input < this.model.getNumber()){
+        }else if(this.model.getInput() < this.model.getNumber()){
             this.model.setMessage("Too low!");
         }
     }
 
     public void setInput(String input) {
-        this.input = Integer.parseInt(input);
+        this.model.setInput(Integer.parseInt(input));
     }
 
     public void resetModel(){

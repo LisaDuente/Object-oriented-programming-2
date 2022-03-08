@@ -39,7 +39,7 @@ public class View implements PropertyChangeListener {
         this.enterNumber.addActionListener((e) -> {this.control.setInput(inputField.getText());
             this.inputField.setText("");
             this.control.compareInput();});
-        this.randomNumber.addActionListener((e) -> {this.control.ramdomize(); this.control.play(); this.control.updateNumber();});
+        this.randomNumber.addActionListener((e) -> {this.control.ramdomize(); this.control.play();});
         this.reset.addActionListener(e -> control.resetModel());
 
         this.panel.setBounds(0,0,400,250);

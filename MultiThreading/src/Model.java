@@ -5,11 +5,36 @@ public class Model {
     private int number;
     private String message;
     private int timer;
+    private Thread thTimer;
+    private int input;
     PropertyChangeSupport support;
 
     public Model(){
+        this.message = "";
         this.timer = 20;
         this.support = new PropertyChangeSupport(this);
+        this.thTimer =  new Thread(() -> {
+            while(this.timer > 0) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                setTimer(this.timer - 1);
+                if (this.message.equals("Right!")) {
+                    break;
+                }
+            }
+            if(this.input == this.number){
+                setMessage("You won!");
+            }else{
+                setMessage("You lost!");
+            }
+        });
+    }
+
+    public void startThreads(){
+        thTimer.start();
     }
 
     public void addPCL(PropertyChangeListener pcl){
@@ -35,11 +60,23 @@ public class Model {
         this.timer = number;
     }
 
+    public int getInput() {
+        return input;
+    }
+
+    public void setInput(int input) {
+        this.input = input;
+    }
+
     public int getTimer() {
         return timer;
     }
 
     public int getNumber() {
         return number;
+    }
+
+    public Thread getThTimer() {
+        return thTimer;
     }
 }
