@@ -55,6 +55,7 @@ public class View implements PropertyChangeListener {
         this.frame.add(panel);
         this.frame.setVisible(true);
         this.frame.setSize(400,250);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     @Override

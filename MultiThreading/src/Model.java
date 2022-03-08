@@ -77,4 +77,25 @@ public class Model {
         return number;
     }
 
+    public void resetThread (){
+        thTimer =  new Thread(() -> {
+            while(this.timer > 0) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                setTimer(this.timer - 1);
+                if (this.message.equals("Right!")) {
+                    break;
+                }
+            }
+            if(this.input == this.number){
+                setMessage("You won!");
+            }else{
+                setMessage("You lost!");
+            }
+        });
+    }
+
 }
