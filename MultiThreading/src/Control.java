@@ -3,6 +3,8 @@ import java.util.Random;
 public class Control {
     private Model model;
     private int input;
+    private Thread th;
+    private Thread th2;
 
     public Control(Model model){
         this.model = model;
@@ -17,7 +19,9 @@ public class Control {
         this.model.startThreads();
     }
 
-
+    public void updateNumber(){
+        th2.start();
+    }
 
     public void compareInput(){
         if(this.model.getInput() == this.model.getNumber()){

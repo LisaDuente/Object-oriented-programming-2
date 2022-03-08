@@ -7,6 +7,7 @@ public class Model {
     private int timer;
     private Thread thTimer;
     private int input;
+
     PropertyChangeSupport support;
 
     public Model(){
@@ -76,7 +77,4 @@ public class Model {
         return number;
     }
 
-    public Thread getThTimer() {
-        return thTimer;
-    }
 }
