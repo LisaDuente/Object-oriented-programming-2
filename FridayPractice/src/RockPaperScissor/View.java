@@ -57,8 +57,7 @@ public class View implements PropertyChangeListener {
     TextField userNameInput;
     TextField nameInput;
     /* TO DO
-        - check play button
-        - add a way to insert a new user
+       
         - make a cool background
         - erase all methods and classes that are no longer used
         - some funny animations for computer's choice and your own choice
@@ -68,6 +67,7 @@ public class View implements PropertyChangeListener {
 
 
     public View(String text, Controller control){
+        //sets the look and feel
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         }catch (UnsupportedLookAndFeelException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
@@ -137,7 +137,6 @@ public class View implements PropertyChangeListener {
         menuClose.setBounds(350, 300, 75, 25);
 
         menuLoad.addActionListener((e) -> { changeToLoad(); fillList();});
-        checkUserLoad();
         menuPlay.addActionListener(e -> changeToGame());
         newPlayer.addActionListener(e -> changeToSave());
         menuClose.addActionListener(e -> endGame() );
@@ -158,7 +157,8 @@ public class View implements PropertyChangeListener {
         back1.setBounds (300, 325, 75,25);
 
         back1.addActionListener(e -> getBack());
-        load.addActionListener( e -> control.loadUser(list.getSelectedValue()));
+        //loads a user and enables the play button
+        load.addActionListener( (e) -> {control.loadUser(list.getSelectedValue()); menuPlay.setEnabled(true);});
 
     //define game panel
         panelGame.setBounds(0,0,500,400);
@@ -177,7 +177,7 @@ public class View implements PropertyChangeListener {
         userWin.setBounds(50,200,200,25);
         computerWin.setBounds(350,200,200,25);
 
-
+        //resets the game for a new player
         back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -188,9 +188,16 @@ public class View implements PropertyChangeListener {
                 score.setText("Let's begin!");
             }
         });
-        rock.addActionListener(e -> control.playGame("rock"));
-        scissors.addActionListener(e -> control.playGame("scissors"));
-        paper.addActionListener(e -> control.playGame("paper"));
+        //sets the picture for the inputs and gets the wins from controller
+        rock.addActionListener((e) -> {control.playGame("rock");
+                                        computerWin.setText("Computer wins: "+ control.getWinsComputer());
+                                        userWin.setText("Your wins: " + control.getWinsUser());});
+        scissors.addActionListener((e) -> {control.playGame("scissors");
+                                            computerWin.setText("Computer wins: "+ control.getWinsComputer());
+                                            userWin.setText("Your wins: " + control.getWinsUser());});
+        paper.addActionListener((e) -> {control.playGame("paper");
+                                        computerWin.setText("Computer wins: "+ control.getWinsComputer());
+                                        userWin.setText("Your wins: " + control.getWinsUser());});
 
     //define panelSave
         panelSave.setBounds(0,0,500,400);
@@ -206,6 +213,7 @@ public class View implements PropertyChangeListener {
 
 
         back2.addActionListener(e -> getBack());
+        //saves the user in DB and clears all text fields
         save.addActionListener((e) -> {control.savePlayer(userNameInput.getText(), nameInput.getText());
                                         userNameInput.setText("");
                                         nameInput.setText("");});
@@ -295,17 +303,6 @@ public class View implements PropertyChangeListener {
             model.add(i,key);
             i++;
         }
-    }
-    //need to fix this
-    public void checkUserLoad(){
-        new Thread(() -> {
-            while (!control.getLoaded()) {
-                Thread.sleep
-                }
-            if (control.getLoaded()) {
-                menuPlay.setEnabled(true);
-            }
-        }).start();
     }
 
     @Override

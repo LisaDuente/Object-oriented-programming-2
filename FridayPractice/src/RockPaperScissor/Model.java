@@ -13,7 +13,6 @@ public class Model {
     private String message;
     private String inputUser;
     private String inputComputer;
-    private boolean loaded;
 
     public Model(){
         this.game = new GameEngine();
@@ -43,7 +42,6 @@ public class Model {
     public void setCurrentUserName(String currentUserName) {
         support.firePropertyChange("currentUserName", this.currentUserName, currentUserName);
         this.currentUserName = currentUserName;
-        this.loaded = true;
     }
 
     public String getCurrentUserName() {
@@ -68,6 +66,14 @@ public class Model {
         return user;
     }
 
+    public int getUserWins(){
+        return this.game.getWinUser();
+    }
+
+    public int getComputerWins(){
+        return this.game.getWinComputer();
+    }
+
     public void setInputComputer(String inputComputer) {
         support.firePropertyChange("inputComputer", this.inputComputer,inputComputer);
         this.inputComputer = inputComputer;
@@ -75,10 +81,6 @@ public class Model {
 
     public GameEngine getGame() {
         return game;
-    }
-
-    public boolean getLoaded(){
-        return loaded;
     }
 
     public GameSaveDB getSaver() {
