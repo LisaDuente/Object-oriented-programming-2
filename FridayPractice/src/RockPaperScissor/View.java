@@ -27,7 +27,9 @@ public class View implements PropertyChangeListener {
     JButton load;
     JButton back;
     JButton back1;
+    JButton back2;
     JButton newPlayer;
+    JButton save;
     //lists
     JList<String> list;
     DefaultListModel<String> model;
@@ -42,6 +44,8 @@ public class View implements PropertyChangeListener {
     JLabel computerInput;
     JLabel computerWin;
     JLabel userWin;
+    JLabel userName;
+    JLabel playerName;
     //images
     ImageIcon background;
     Image bg;
@@ -50,7 +54,8 @@ public class View implements PropertyChangeListener {
     ImageIcon ppr;
     ImageIcon nope;
     //text
-    TextField newUserInput;
+    TextField userNameInput;
+    TextField nameInput;
     /* TO DO
         - add a way to insert a new user
         - make a cool background
@@ -74,7 +79,7 @@ public class View implements PropertyChangeListener {
         panelMenu = new JPanel(null);
         panelLoad = new JPanel(null);
         panelGame = new JPanel(null);
-        panelSave = new JPanelBackground(null);
+        panelSave = new JPanel(null);
 
     //initiate buttons
         menuClose = new JButton("Close");
@@ -82,11 +87,13 @@ public class View implements PropertyChangeListener {
         menuPlay = new JButton("Play");
         back = new JButton("Back");
         back1 = new JButton("Back");
+        back2 = new JButton("Back");
         load = new JButton("Load");
         rock = new JButton("Rock");
         paper = new JButton("Paper");
         scissors = new JButton("Scissors");
         newPlayer = new JButton("New Player");
+        save = new JButton("Save");
 
     //initiate images
         this.background = new ImageIcon("src/RockPaperScissor/RPS.bmp");
@@ -105,6 +112,8 @@ public class View implements PropertyChangeListener {
         userInput = new JLabel(nope);
         computerWin = new JLabel("Computer wins: " + 0);
         userWin = new JLabel(("Your wins:" + 0));
+        userName = new JLabel("Insert your nickname");
+        playerName = new JLabel("Insert your own name");
 
     //initiate lists
         model = new DefaultListModel<>();
@@ -113,7 +122,8 @@ public class View implements PropertyChangeListener {
         scroll = new JScrollPane(list);
 
     //initiate text fields
-        newUserInput = new TextField();
+        userNameInput = new TextField();
+        nameInput = new TextField();
 
     //define menu panel
         panelMenu.setBounds(0,0,500,400);
@@ -125,10 +135,13 @@ public class View implements PropertyChangeListener {
         newPlayer.setBounds(225,300,100,25);
         menuClose.setBounds(350, 300, 75, 25);
 
-        menuLoad.addActionListener(e -> changeToLoad());
+        menuLoad.addActionListener((e) -> { changeToLoad(); fillList();});
+        checkUserLoad();
         menuPlay.addActionListener(e -> changeToGame());
         newPlayer.addActionListener(e -> changeToSave());
         menuClose.addActionListener(e -> endGame() );
+
+        menuPlay.setVisible(false);
 
     //define load panel
         panelLoad.setBounds(0,0,500,400);
@@ -142,8 +155,8 @@ public class View implements PropertyChangeListener {
         load.setBounds(100,325,75,25);
         loadStatus.setBounds(50,10,325,25);
         back1.setBounds (300, 325, 75,25);
-        back1.addActionListener(e -> getBack());
 
+        back1.addActionListener(e -> getBack());
         load.addActionListener( e -> control.loadUser(list.getSelectedValue()));
 
     //define game panel
@@ -183,7 +196,18 @@ public class View implements PropertyChangeListener {
         panelSave.setBackground(Color.LIGHT_GRAY);
         panelSave.setVisible(false);
 
-        newUserInput.setBounds(50, 200, 200, 25);
+        userNameInput.setBounds(125, 200, 200, 25);
+        save.setBounds(75, 300, 100, 25);
+        back2.setBounds(275, 300, 100, 25);
+        userName.setBounds(125, 170, 200, 25);
+        nameInput.setBounds(125, 80, 200, 25);
+        playerName.setBounds(125, 50,200,25);
+
+
+        back2.addActionListener(e -> getBack());
+        save.addActionListener((e) -> {control.savePlayer(userNameInput.getText(), nameInput.getText());
+                                        userNameInput.setText("");
+                                        nameInput.setText("");});
 
 
     //add to panels
@@ -210,13 +234,19 @@ public class View implements PropertyChangeListener {
         panelMenu.add(newPlayer);
         panelMenu.add(head);
 
-        panelSave.add(newUserInput);
+        panelSave.add(userNameInput);
+        panelSave.add(save);
+        panelSave.add(back2);
+        panelSave.add(userName);
+        panelSave.add(playerName);
+        panelSave.add(nameInput);
 
 
     //add to frame
         frame.add(panelMenu);
         frame.add(panelLoad);
         frame.add(panelGame);
+        frame.add(panelSave);
 
         frame.setSize(500,400);
         frame.setResizable(false);
@@ -240,6 +270,7 @@ public class View implements PropertyChangeListener {
         panelMenu.setVisible(true);
         panelLoad.setVisible(false);
         panelGame.setVisible(false);
+        panelSave.setVisible(false);
     }
 
     public void changeToSave(){
@@ -256,11 +287,24 @@ public class View implements PropertyChangeListener {
 
     //make this in control?
     public void fillList(){
+        model.clear();
+        control.updateHashmap();
         int i = 0;
         for(String key : control.getMap().keySet()){
             model.add(i,key);
             i++;
         }
+    }
+
+    public void checkUserLoad(){
+        new Thread(() -> {
+            while (!control.getLoaded()) {
+                System.out.println("Running");
+                if (control.getLoaded()) {
+                    menuPlay.setVisible(true);
+                }
+            }
+        }).start();
     }
 
     @Override
@@ -303,5 +347,7 @@ public class View implements PropertyChangeListener {
                 break;
             //here needs to be everything that could change in the model, like computer output, ect
         }
+
+
     }
 }

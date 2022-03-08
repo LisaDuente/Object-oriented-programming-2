@@ -1,14 +1,11 @@
 package RockPaperScissor;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 
 public class GameSaveDB {
 
     DBHandler db = new DBHandler();
-    HashMap<String, String> map;
+    TreeMap<String, String> map;
 
     public GameSaveDB(){
         this.map = db.getData();
@@ -53,7 +50,23 @@ public class GameSaveDB {
         db.updateUserOnLoose(user.getLoose(),userName);
     }
 
-    public HashMap<String, String> getMap() {
+    public void newUser(String userName, String name){
+        db.insertUser(userName, name);
+    }
+
+    public TreeMap<String, String> getMap() {
         return map;
+    }
+
+    public void setMap(TreeMap<String, String> map) {
+        this.map = map;
+    }
+
+    public DBHandler getDb() {
+        return db;
+    }
+
+    public void refreshMap(){
+        this.map = db.getData();
     }
 }

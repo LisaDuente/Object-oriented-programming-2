@@ -3,6 +3,7 @@ package RockPaperScissor;
 import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class Controller {
     private Model model;
@@ -59,6 +60,14 @@ public class Controller {
         this.model.setCurrentUserName(s);
     }
 
+    public void savePlayer(String playerUserName, String playerName){
+        this.model.getSaver().newUser(playerUserName, playerName);
+    }
+
+    public void updateHashmap(){
+        this.model.getSaver().refreshMap();
+    }
+
     public Model getModel() {
         return model;
     }
@@ -67,7 +76,11 @@ public class Controller {
         this.model.getGame().resetGame();
     }
 
-    public HashMap<String, String> getMap(){
+    public TreeMap<String, String> getMap(){
         return this.model.getSaver().getMap();
+    }
+
+    public boolean getLoaded(){
+        return this.model.getLoaded();
     }
 }

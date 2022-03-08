@@ -13,11 +13,13 @@ public class Model {
     private String message;
     private String inputUser;
     private String inputComputer;
+    private boolean loaded;
 
     public Model(){
         this.game = new GameEngine();
         this.saver = new GameSaveDB();
         this.support = new PropertyChangeSupport(this);
+        this.currentUserName = "";
     }
 
     public void addPcl(PropertyChangeListener pcl){
@@ -41,6 +43,7 @@ public class Model {
     public void setCurrentUserName(String currentUserName) {
         support.firePropertyChange("currentUserName", this.currentUserName, currentUserName);
         this.currentUserName = currentUserName;
+        this.loaded = true;
     }
 
     public String getCurrentUserName() {
@@ -72,6 +75,10 @@ public class Model {
 
     public GameEngine getGame() {
         return game;
+    }
+
+    public boolean getLoaded(){
+        return loaded;
     }
 
     public GameSaveDB getSaver() {

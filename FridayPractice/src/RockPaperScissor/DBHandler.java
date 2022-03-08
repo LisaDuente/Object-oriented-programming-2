@@ -1,6 +1,7 @@
 package RockPaperScissor;
 import java.sql.*;
 import java.util.HashMap;
+import java.util.TreeMap;
 
 public class DBHandler {
     private final String USER = "RPS_User";
@@ -81,8 +82,8 @@ public class DBHandler {
 
 
 
-    public HashMap getData(){
-        HashMap<String, String> map = new HashMap<>();
+    public TreeMap getData(){
+        TreeMap<String, String> map = new TreeMap<>();
         try{
             String query = "SELECT * FROM User";
             Connection connect = DriverManager.getConnection(URL,USER,PASS);
