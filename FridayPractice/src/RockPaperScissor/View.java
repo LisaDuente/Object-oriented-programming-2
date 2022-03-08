@@ -57,6 +57,7 @@ public class View implements PropertyChangeListener {
     TextField userNameInput;
     TextField nameInput;
     /* TO DO
+        - check play button
         - add a way to insert a new user
         - make a cool background
         - erase all methods and classes that are no longer used
@@ -141,7 +142,7 @@ public class View implements PropertyChangeListener {
         newPlayer.addActionListener(e -> changeToSave());
         menuClose.addActionListener(e -> endGame() );
 
-        menuPlay.setVisible(false);
+        menuPlay.setEnabled(false);
 
     //define load panel
         panelLoad.setBounds(0,0,500,400);
@@ -295,14 +296,14 @@ public class View implements PropertyChangeListener {
             i++;
         }
     }
-
+    //need to fix this
     public void checkUserLoad(){
         new Thread(() -> {
             while (!control.getLoaded()) {
-                System.out.println("Running");
-                if (control.getLoaded()) {
-                    menuPlay.setVisible(true);
+                Thread.sleep
                 }
+            if (control.getLoaded()) {
+                menuPlay.setEnabled(true);
             }
         }).start();
     }
