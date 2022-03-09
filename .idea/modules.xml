@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Exercises 20220301/Exercises 20220301.iml" filepath="$PROJECT_DIR$/Exercises 20220301/Exercises 20220301.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ExercisesDay2/ExercisesDay2.iml" filepath="$PROJECT_DIR$/ExercisesDay2/ExercisesDay2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FridayPractice/FridayPractice.iml" filepath="$PROJECT_DIR$/FridayPractice/FridayPractice.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MVC/MVC.iml" filepath="$PROJECT_DIR$/MVC/MVC.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MultiThreading/MultiThreading.iml" filepath="$PROJECT_DIR$/MultiThreading/MultiThreading.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Object-oriented-programming-2.iml" filepath="$PROJECT_DIR$/.idea/Object-oriented-programming-2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ObserverPattern/ObserverPattern.iml" filepath="$PROJECT_DIR$/ObserverPattern/ObserverPattern.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Streams/Streams.iml" filepath="$PROJECT_DIR$/Streams/Streams.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ÖvningDag1/ÖvningDag1.iml" filepath="$PROJECT_DIR$/ÖvningDag1/ÖvningDag1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ÖvningDag1.1/ÖvningDag1.1.iml" filepath="$PROJECT_DIR$/ÖvningDag1.1/ÖvningDag1.1.iml" />
+    </modules>
+  </component>
+</project>

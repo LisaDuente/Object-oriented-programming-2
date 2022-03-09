@@ -57,7 +57,7 @@ public class View implements PropertyChangeListener {
     TextField userNameInput;
     TextField nameInput;
     /* TO DO
-       
+
         - make a cool background
         - erase all methods and classes that are no longer used
         - some funny animations for computer's choice and your own choice
