@@ -18,16 +18,16 @@ public class TryButton extends JButton {
         }
 
     }
+    //adding a mouse listener to paint on clicked, on hovering...
 
     @Override
-    public void paint(Graphics g) {
-        super.paint(g);
+    public void setText(String text) {
+        super.setText(text);
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(button, 0, 0, null);
     }
 
     @Override
