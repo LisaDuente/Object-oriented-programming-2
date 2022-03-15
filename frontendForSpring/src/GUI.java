@@ -26,9 +26,12 @@ public class GUI extends JFrame {
         this.resultName.setBounds(75,75,200,25);
 
         this.enterName.addActionListener((e) -> {
-                    String text = manager.sendRequest("/?name="+nameInput.getText());
-                    nameInput.setText("");
-                    resultName.setText(text);
+            //its better to do this in a new thread so that the gui doesnt freeze
+            new Thread(()-> {
+                String text = manager.sendRequest("hello/?name="+nameInput.getText());
+                nameInput.setText("");
+                resultName.setText(text);
+            }).start();
         });
 
 
@@ -44,6 +47,17 @@ public class GUI extends JFrame {
         this.plus.setBounds(103,175,20,25);
         this.enterNumbers.setBounds(170,175,75,25);
         this.resultNumbers.setBounds(75,200,200,25);
+
+        this.enterNumbers.addActionListener((e) -> {
+            new Thread(() -> {
+                String text = manager.sendRequest("calculate/?num1="
+                        +num1Input.getText()
+                        +"&num2="+num2Input.getText());
+                num2Input.setText("");
+                num1Input.setText("");
+                resultNumbers.setText(text);
+            }).start();
+        });
 
     //add to the frame
         this.add(num1Input);
