@@ -1,0 +1,16 @@
+[
+  {
+    "ID": "1",
+    "Name": "Lisa",
+    "Wins": 18,
+    "Lose": 16,
+    "userHobbies": ["Boardgames", "Art","Crochet"]
+  },
+  {
+    "ID": "Alexa",
+    "Name": "Alex",
+    "Wins": 18,
+    "Lose": 16,
+    "userHobbies": ["Boardgames", "Art","Crochet"]
+  }
+]
