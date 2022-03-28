@@ -32,6 +32,7 @@ public class ScrollFrame extends JFrame{
 
             JButton book= new JButton("Book");
             book.setBounds(250,35, 100, 30);
+            book.setFocusPainted(false);
             rowPanel.add(book);
 
             JLabel label = new JLabel(proxy[i]);
