@@ -44,10 +44,6 @@ public class ScrollFrame extends JScrollPane{
                 rowPanel.setPreferredSize(new Dimension(400, 100));
                 columnPanel.add(rowPanel);
 
-                JButton book = new JButton("Book");
-                book.setBounds(550, 35, 100, 30);
-                rowPanel.add(book);
-
                 //change this
                 JLabel movieTitle = new JLabel(String.valueOf(this.currentMovie.get("name")));
                 movieTitle.setBounds(150, 10, 200, 30);
@@ -65,6 +61,12 @@ public class ScrollFrame extends JScrollPane{
                 shortMovieDescription.setBounds(350, 10, 200, 100);
                 shortMovieDescription.setEditable(false);
                 shortMovieDescription.setLineWrap(true);
+
+                JButton book= new JButton("Book");
+                book.setBounds(250,35, 100, 30);
+                book.setFocusPainted(false);
+                rowPanel.add(book);
+
 
                 rowPanel.add(shortMovieDescription);
 
