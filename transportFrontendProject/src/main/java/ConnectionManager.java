@@ -74,6 +74,7 @@ public class ConnectionManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println("response:"+responseString);
         return responseString;
     }
     public String sendUrlToDeleteMovieById(int id){

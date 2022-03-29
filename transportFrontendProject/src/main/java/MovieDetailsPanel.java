@@ -14,7 +14,7 @@ public class MovieDetailsPanel extends JPanel {
 
     public MovieDetailsPanel(){
         //SET PANEL
-        this.setSize(1000,800);
+        this.setSize(1000,600);
         this.setLayout(new BorderLayout());
 
         //INITIALIZE
@@ -34,10 +34,6 @@ public class MovieDetailsPanel extends JPanel {
         this.image.setSize(300,300);
 
         //ACTION LISTENER
-        this.back.addActionListener((e) -> {
-            this.setVisible(false);
-
-        });
 
         //PANELS FOR COMPONENTS
         JPanel northPanel = new JPanel(new FlowLayout());
@@ -78,5 +74,13 @@ public class MovieDetailsPanel extends JPanel {
         this.genre.setText("Genre: "+this.currentMovie.getGenre());
         this.duration.setText("Duration: "+this.currentMovie.getDuration());
         this.description.setText(this.currentMovie.getMovieDescription());
+    }
+
+    public buttonMaker getBook() {
+        return book;
+    }
+
+    public buttonMaker getBack() {
+        return back;
     }
 }

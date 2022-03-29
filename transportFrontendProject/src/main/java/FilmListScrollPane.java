@@ -9,30 +9,39 @@ import java.util.Map;
 
 public class FilmListScrollPane extends JScrollPane {
     MovieDetailsPanel movieDetails;
+    BackPanel back;
     private Movie currentMovie = new Movie();
-    private String currentMovieId = "";
-    ConnectionManager connect = new ConnectionManager();
+    ArrayList<Movie> movieListFromBackend;
+    //buttonMaker backButton;
     Gson gson = new Gson();
+    JPanel columnPanel;
 
     //TODO: Add an Image Icon and a Link from a website to this panel
-    public FilmListScrollPane(MovieDetailsPanel movieDetails){
+    public FilmListScrollPane(MovieDetailsPanel movieDetails, BackPanel back){
         this.movieDetails = movieDetails;
-        //gets the list of movies as a JSON string
-        String movieListString = connect.sendUrlToDownloadAllMovies();
-        //transfers the JSON in an ArrayList with Movies in JSON format
-        ArrayList<Movie> movieListFromBackend = gson.fromJson(movieListString,new TypeToken<ArrayList<JsonObject>>(){}.getType());
+        this.back = back;
         this.setBounds(50,20,900,700);
 
         JPanel borderLayoutPanel = new JPanel();
         this.setViewportView(borderLayoutPanel);
         borderLayoutPanel.setLayout(new BorderLayout(0,0));
 
-        JPanel columnPanel = new JPanel();
+        columnPanel = new JPanel();
         borderLayoutPanel.add(columnPanel,BorderLayout.NORTH);
         columnPanel.setLayout(new GridLayout(0,1,0,1));
         columnPanel.setBackground(Color.DARK_GRAY);
 
+        //this.backButton = new buttonMaker("Back",255,87,15,"test");
+        //borderLayoutPanel.add(backButton,BorderLayout.SOUTH);
 
+
+    }
+
+    public void setMovieListFromBackend(ArrayList<Movie> movieListFromBackend) {
+        this.movieListFromBackend = movieListFromBackend;
+    }
+
+    public void addPanels(){
         for(int i = 0; i<movieListFromBackend.size(); i++){
             //converts the json objects in the list to actual movie objects
             String movieString = String.valueOf(movieListFromBackend.get(i));
@@ -42,7 +51,6 @@ public class FilmListScrollPane extends JScrollPane {
                 JPanel rowPanel = new JPanel();
                 rowPanel.setPreferredSize(new Dimension(600, 100));
                 columnPanel.add(rowPanel);
-                //TODO: needs to return the movie Id for the next panel somehow
                 JButton book = new JButton("Book");
                 book.setBounds(550, 35, 100, 30);
                 rowPanel.add(book);
@@ -51,17 +59,15 @@ public class FilmListScrollPane extends JScrollPane {
                 JLabel id = new JLabel(String.valueOf(this.currentMovie.getId()));
                 id.setVisible(false);
                 book.addActionListener((e) -> {
-                    //TODO: look up the backend if its up to date then it should be sending a json string here
 
                     this.setVisible(false);
-                    String movieAsString = connect.sendUrlToDownloadMovieById(Integer.parseInt(id.getText()));
-                    System.out.println(" Here should be a JSON String: "+movieAsString);
-                    this.currentMovie = gson.fromJson(movieAsString,Movie.class);
-
+                    //loads the right movie from the movie list
+                    this.currentMovie = gson.fromJson(String.valueOf(movieListFromBackend.get(Integer.parseInt(id.getText())-1)),Movie.class);
                     this.movieDetails.setCurrentMovie(this.currentMovie);
                     this.movieDetails.updatePanel();
                     this.movieDetails.setVisible(true);
-                    System.out.println(this.currentMovie.toString());
+                    this.back.setVisible(false);
+
                 });
 
                 //change this
@@ -92,16 +98,9 @@ public class FilmListScrollPane extends JScrollPane {
                     shortMovieDescription.setBackground(SystemColor.WHITE);
                     rowPanel.setBackground(SystemColor.WHITE);
                 }
+                rowPanel.setVisible(true);
             }
         }
-    }
-
-    public void setCurrentMovie(Movie currentMovie) {
-        this.currentMovie = currentMovie;
-    }
-
-    public Movie getCurrentMovie() {
-        return currentMovie;
     }
 }
 
